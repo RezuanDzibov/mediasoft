@@ -25,6 +25,7 @@ class Street(UUIDMixin, Base):
     name = Column(String)
     city_id = Column(UUID, ForeignKey("cities.id"))
     city = relationship("City", back_populates="streets")
+    shops = relationship("Shop", back_populates="street")
 
 
 class Shop(UUIDMixin, Base):
