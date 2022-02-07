@@ -19,7 +19,7 @@ async def get_cities(session: AsyncSession) -> List[City]:
 
 async def get_city_streets(session: AsyncSession, city_id: UUID) -> List[Street]:
     statement = select(Street).where(Street.city_id == city_id).options(
-        Load(Street).load_only(Street().id, Street.name),
+        Load(Street).load_only(Street.id, Street.name),
     )
     result = await session.execute(statement)
     streets = result.scalars().all()
