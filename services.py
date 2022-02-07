@@ -1,10 +1,11 @@
 from typing import List
 
-from sqlalchemy import select
+from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Load
 
-from db.models import City, Street
+from db.models import City, Shop, Street
+from schemas import ShopCreateIn
 
 
 async def get_cities(session: AsyncSession) -> List[City]:
@@ -23,3 +24,11 @@ async def get_city_streets(session: AsyncSession, city_id: str) -> List[Street]:
     result = await session.execute(statement)
     streets = result.scalars().all()
     return streets
+
+
+async def insert_shop(session: AsyncSession, item: ShopCreateIn) -> Shop:
+    statement = insert(Shop).values(item.dict()).returning(Shop.id)
+    result = await session.execute(statement)
+    await session.commit()
+    shop = result.scalar()
+    return shop
