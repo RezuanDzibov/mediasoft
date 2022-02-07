@@ -1,3 +1,5 @@
+from datetime import time
+
 from pydantic import BaseModel, UUID4
 
 
@@ -15,3 +17,16 @@ class Street(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class ShopCreateIn(BaseModel):
+    name: str
+    building: int
+    open_time: time
+    close_time: time
+    city_id: UUID4
+    street_id: UUID4
+
+
+class ShopCreateOut(BaseModel):
+    id: UUID4
