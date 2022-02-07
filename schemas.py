@@ -7,3 +7,11 @@ class City(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class Street(BaseModel):
+    id: UUID4
+    name: str
+
+    class Config:
+        orm_mode = True
