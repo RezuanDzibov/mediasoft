@@ -17,7 +17,7 @@ async def get_cities(session: AsyncSession) -> List[City]:
     return cities
 
 
-async def get_city_streets(session: AsyncSession, city_id: UUID) -> List[Street]:
+async def get_city_streets(session: AsyncSession, city_id: str) -> List[Street]:
     statement = select(Street).where(Street.city_id == city_id).options(
         Load(Street).load_only(Street.id, Street.name),
     )
