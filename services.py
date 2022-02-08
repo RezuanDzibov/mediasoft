@@ -1,6 +1,8 @@
 from typing import List
+from uuid import UUID
 
-from sqlalchemy import select, insert
+
+from sqlalchemy import insert, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import Load
 
@@ -26,9 +28,9 @@ async def get_city_streets(session: AsyncSession, city_id: str) -> List[Street]:
     return streets
 
 
-async def insert_shop(session: AsyncSession, item: ShopCreateIn) -> Shop:
-    statement = insert(Shop).values(item.dict()).returning(Shop.id)
+async def insert_shop(session: AsyncSession, item: ShopCreateIn) -> UUID:
+    statement = insert(Shop).values(**item.dict()).returning(Shop.id)
     result = await session.execute(statement)
     await session.commit()
-    shop = result.scalar()
-    return shop
+    shop_id = result.scalar()
+    return shop_id
