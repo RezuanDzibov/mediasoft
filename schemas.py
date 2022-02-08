@@ -24,7 +24,6 @@ class ShopCreateIn(BaseModel):
     building: str
     open_time: time
     close_time: time
-    city_id: UUID4
     street_id: UUID4
 
 

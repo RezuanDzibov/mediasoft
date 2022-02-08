@@ -35,7 +35,5 @@ class Shop(UUIDMixin, Base):
     building = Column(String)
     open_time = Column(Time)
     close_time = Column(Time)
-    city_id = Column(UUID(as_uuid=True), ForeignKey("cities.id"))
-    city = relationship("City", back_populates="shops")
     street_id = Column(UUID(as_uuid=True), ForeignKey("streets.id"))
     street = relationship("Street", back_populates="shops")
