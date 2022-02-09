@@ -6,7 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 import services
 from db.base import get_session
-from schemas import City, ShopCreateIn, ShopCreateOut, Street
+from schemas import City, ShopCreateIn, ShopCreateOut, Street, ShopQueryParameters, ShopRetrive
 
 
 router = APIRouter()
@@ -28,3 +28,12 @@ async def get_city_streets(city_id: UUID, session: AsyncSession = Depends(get_se
 async def create_shop(item: ShopCreateIn, session: AsyncSession = Depends(get_session)) -> ShopCreateOut:
     shop_id = await services.insert_shop(session=session, item=item)
     return ShopCreateOut(id=shop_id)
+
+
+@router.get("/shops", response_model=List[ShopRetrive])
+async def get_shops(
+    query_parameters: ShopQueryParameters = Depends(),
+    session: AsyncSession = Depends(get_session),
+):
+    shops = await services.get_shops(session=session, query_parameters=query_parameters)
+    return shops

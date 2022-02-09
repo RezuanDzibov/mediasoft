@@ -16,7 +16,6 @@ class City(UUIDMixin, Base):
 
     name = Column(String)
     streets = relationship("Street", back_populates="city")
-    shops = relationship("Shop", back_populates="city")
 
 
 class Street(UUIDMixin, Base):
